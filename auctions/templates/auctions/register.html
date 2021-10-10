@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block extrahead %}
+    <meta charset="UTF-8">
+    <link href="{% static 'auctions/access.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+     <div class="wrapper fadeInDown">
+        <div id="formContent">            
+            <h2 class="active">Sign Up </h2>
+            <h2 class="inactive underlineHover"><a href="{% url 'login' %}"> Sign In </a></h2>
+            <br><br>
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
+
+             <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}        
+                <input class="fadeIn second" autofocus type="text" name="username" placeholder="Username">
+                <input class="fadeIn second" type="email" name="email" placeholder="Email Address">
+                <input class="fadeIn third" type="password" name="password" placeholder="Password">
+                <input class="fadeIn third" type="password" name="confirmation" placeholder="Confirm Password">
+                <br><br>
+                <input class="fadeIn fourth" type="submit" value="Register">
+            </form>      
+            Already have an account? <a href="{% url 'login' %}">Log In here.</a>  
+        </div>
+    </div>	
+    
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="row" id="product">
+        <div class="col-lg-6 img-product">
+		        <li class="list-group-item"><center><h5>Category: <b>{{listing.categories}}</b></h5></center></li>
+                <center><img class="img-fluid" src="{{listing.image.url}}" alt="connect" style="max-height:400px"></center>
+				<li class="list-group-item">Listed by: <b>{{listing.user|title}}</b>  <object align="right"> Date of listing: <em><b>{{listing.datepublished}}</b></em></object> </li>
+                
+        </div>
+        <div class="col-lg-6 acution-description">
+            <p class="product-title"><i>{{listing.title}}</i></p>
+            <p class="product-description">{{listing.description}}</p>
+            {% if listing.closed == False %}
+                {% if listing.last_bid %}
+                    <p id="lastBid" class="lastBid{{listing.id}} product-description product" value="{{listing.last_bid.bid}}"><b><h5 style="color:blue;">Previous Bid: ${{listing.last_bid.bid}}</h5></b> <object align="center">Bidded by: {{listing.last_bid.user.username|title}}</object></p>
+                    <p></p>					
+                {% else %}
+                    <p id="initialBid" class="lastBid{{listing.id}} product-description product" value="{{listing.starting_bid}}">Initial Bid: ${{listing.starting_bid}}</p>
+                {% endif %}
+            {% else %}
+			    {% if listing.last_bid %}
+                    <p id="lastBid" class="lastBid{{listing.id}} product-description product" value="{{listing.last_bid.bid}}">Closed Amount: ${{listing.last_bid.bid}}</p>
+				{% else %}
+				    <p id="initialBid" class="lastBid{{listing.id}} product-description product" value="{{listing.starting_bid}}">Closed Amount: ${{listing.starting_bid}}</p>
+				{% endif %}
+                {% if listing.last_bid.user.username == request.user.username %}
+                    <p id="listing_winner" class="product-description product"><b>You have won this listing</b></p>
+                {% else %}
+				    {% if listing.user == request.user %}
+					    {% if listing.bids.count == 0 %}   
+					        <p class="product-description product">You closed the bid without anyone bidding</p>
+						{% else %}
+						    <p class="product-description product">You have Sold the listing to {{listing.last_bid.user.username|title}}</p>						
+						{% endif %}
+					{% else %}
+					    {% if listing.bids.count == 0 %}
+						    <p class="product-description product">{{listing.user}} closed the bid without anyone bidding</p>
+						{% else %}
+					        <p class="product-description product">Listing Already Sold to {{listing.last_bid.user.username|title}}</p>
+						{% endif %}
+					{% endif %}	                    
+                {% endif %}
+            {% endif %}            
+			{% if listing.user != request.user %}
+                {% if listing.closed == False %}
+                <small class="product product-bid"><span id="smallTotalBid">{{listing.bids.count}}</span> bid(s) so far. <span id="yourLastBid">{% if listing.last_bid.user == request.user %}Your bid is the current bid.{% endif %}</span></small>
+                <div class="row">
+                    <form id="addBid" data-startingbid="{{listing.starting_bid}}" data-lastbid="{{listing.last_bid}}" data-auction="{{listing.id}}" action="{% url 'bid_to_listing' listing=listing.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="totalBid" id="newBid" placeholder="Enter bid">
+                        <button class="button-auction" type="submit" onclick="hideMe"><p style= "text-align: center; padding: 2px; margin-bottom: 5px;" id="make_bid" >Make a bid</p></button>
+                    </form>
+                        {% if listing not in watchlist.listings.all %}
+                            <form id="addToWatchlist" action="{% url 'add_to_watchlist' listing=listing.id %}">
+                                {% csrf_token %}
+                                <button id="button-auction" class="button-auction" type="submit"><p style= "color:yellow; text-align: center; padding: 2px; margin-bottom: 5px;" id="watchlist_toggle">Add/Remove to Watchlist</p></button>
+                            </form>   
+                        {% else %}
+                            <form id="addToWatchlist" action="{% url 'add_to_watchlist' listing=listing.id %}">
+                                {% csrf_token %}
+                                <button id="button-auction" class="button-auction added" type="submit"><p style= "color:red; text-align: center; padding: 2px; margin-bottom: 5px;" id="watchlist_toggle">Add/Remove from Watchlist</p></button>
+                            </form> 
+                        {% endif %}
+                </div>
+                <p style="color: red;"><small id="message"></small></p>
+                {% endif %}
+            {% endif %}
+            {% if listing.user == request.user %}			
+                <div class="btn-right">
+				    {% if listing.closed == False %}
+                    <a class="btn btn-auction" href="{% url 'close_listing' listing=listing.id %}">Close listing</a>
+                    {% endif %}                                        
+                </div>				
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="btn-middle">
+            <button type="button" class="btn btn-auction btn-send-comment" data-toggle="modal" data-target="#create">Leave a comment</button>
+        </div>
+          
+          
+          <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content new-post-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Create comment</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form method=post action="{% url 'add_comment' listing=listing.id %}">
+                        {% csrf_token %}
+                        <textarea rows="10" class="form-control" name="comment"></textarea>
+                        <br>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-dark save" type="submit" value="Create"><i class="fa fa-check-square-o"></i> Create</button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% if comments %}
+        <div id="commentsList">
+            {% for comment in comments %}
+                <div id="comment{{comment.id}}" class="comment">
+                    <small><strong>{{comment.user|title}}</strong></small>
+                    <p class="comment-cont">{{comment.comment}}</p>
+                    <div class="btn-right">
+                        <form id="deleteComment" data-comment='{{comment.id}}' action="{% url 'delete_comment' comment=comment.id %}">
+                            {% csrf_token %}
+                            <small style="margin-right: 4px;">{{comment.date}}</small>
+                            <button class="btn btn-outline-dark" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<div>
+    {% if listings %}
+    <div class="container-fluid">
+        <div class="row">
+            {% for listing in listings %}
+                <div class="card list-details col-lg-4 col-sm-12">
+                    <div class="card-body">
+                    <h4 class="card-title">{{listing.title}}</h4>
+                    <h5 class="card-subtitle mb-2 text-muted">{{listing.datepublished}}</h5>
+                    <a href="{% url 'listing_view' listing=listing.id %}" class="card-link btn btn-outline-auction">
+					    <img class="img-fluid" src="{{listing.image.url}}" alt="connect" style="max-height:300px">
+					</a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% if listing.last_bid %}
+                            {% if listing.closed == True %}
+                                <li class="list-group-item product-description"><b style='color:red;'>Closed - Amount: ${{listing.last_bid.bid}}</b></li>
+                            {% else %}
+                                <li class="list-group-item product-description">Current Bid: ${{listing.last_bid.bid}}</li>
+                            {% endif %}
+                        {% else %}
+                            <li class="list-group-item product-description">Initial Bid: ${{listing.starting_bid}}</li>
+                        {% endif %}						
+                        <li class="list-group-item product-description">Category: <b>{{listing.categories}}</b></li>
+                    </ul>  
+                    <div class="card-body">
+                        <a href="{% url 'listing_view' listing=listing.id %}" class="card-link btn btn-outline-auction">Item no. {{listing.id}} <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <div class="empty">
+            <p>This category does not have any listing.</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+
+<div>
+    {% if watchlist.listings.all %}
+    <div class="container-fluid">
+        <div class="row">		
+        {% for listing in watchlist.listings.all %}		    
+            <div id="listing{{listing.id}}" class="card list-details col-lg-4 col-sm-12">
+                <div class="card-body">
+                <h5 class="card-title">{{listing.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{listing.datepublished}}</h6>
+				<a href="{% url 'listing_view' listing=listing.id %}" class="card-link btn btn-outline-auction">
+                    <img class="img-fluid" src="{{listing.image.url}}" alt="connect" style="max-height:300px">
+				</a>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if listing.last_bid %}
+                        {% if listing.closed == True %}
+                            <li class="list-group-item product-description"><b style='color:red;'>Closed - Amount: ${{listing.last_bid.bid}}</b></li>
+                        {% else %}
+                            <li class="list-group-item product-description">Current Bid: ${{listing.last_bid.bid}}</li>
+                        {% endif %}
+                    {% else %}
+                        <li class="list-group-item">Initial Bid: ${{listing.starting_bid}}</li>
+                    {% endif %}
+                    <li class="list-group-item">Categories: {{listing.categories}}</li>					
+                </ul>
+                <div class="card-body">
+				    <h6 class="card-subtitle mb-2 text-muted product-description">Listed By:<b>{{listing.user}}</b></h6>
+                    <!--<a href="{% url 'listing_view' listing=listing.id %}" class="card-link btn btn-outline-auction">Listing page <i class="fa fa-angle-double-right"></i></a>-->
+                    <form data-auction={{listing.id}} id="deleteFromWatchlist" action="{% url 'delete_listing_from_watchlist' listing=listing.id %}">
+                        {% csrf_token %}
+                        <button class="deleteFromWatchlist btn btn-outline-auction" onClick="window.location.reload();">Delete from watchlist <i class="fa fa-close"></i></button>					
+						
+                    </form>
+					
+                </div>
+            </div>    
+        {% endfor %}
+        </div>
+    </div>
+    {% else %}
+        <div class="empty">
+            <p>Your watchlist is empty!</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

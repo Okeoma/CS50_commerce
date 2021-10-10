@@ -1,0 +1,215 @@
+body {
+    padding: 10px;
+	background-color:  #f2f2f2;
+}
+
+#listing_winner{
+	font-size: 30px;
+    font-family: Franklin Gothic Heavy;
+	color: red;
+}
+
+.btn-right{
+  text-align: right;
+}
+
+.btn-middle{
+  text-align: center;
+}
+
+.btn-send-comment{
+  margin-bottom: 10px;
+}
+
+
+#product{
+  padding: 10px;
+}
+
+.comment {
+  background-color: white;
+  border: 1px solid #1a000d;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.add-comment {
+  margin-top: 40px;
+}
+
+#watchListTotal {
+  background: #0e61c7;
+  border-radius: 0.8em;
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+  width: 26px;
+  color: white;
+}
+
+.nav-link{
+  text-align: center;
+}
+
+.product-title{
+  font-family: Franklin Gothic Heavy;
+  font-size: 26px;
+}
+
+.product-description{
+  font-family: Franklin Gothic Heavy;
+}
+
+.product-category{
+  position: absolute;
+  top: 8px;
+  right: 30px;
+}
+
+.deleteFromWatchlist{
+  margin-top: 20px;
+}
+
+.product-user{
+  position: absolute;
+  bottom: -4px;
+  left: 30px;
+}
+
+.product-date{
+  position: absolute;
+  bottom: -4px;
+  right: 30px;
+}
+
+
+.title{
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: Franklin Gothic Heavy;
+}
+
+.button-auction{
+  color: white;
+  background-color: black;
+  margin-right: 4px;
+}
+
+.message{
+  margin-top: 20px;
+}
+
+
+.empty{
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #1a000d;
+  font-size: 40px;
+  font-family: Franklin Gothic Heavy;
+}
+
+
+.login, .register, .add-auction{
+  border: 1px solid #1a000d;
+  padding: 20px;
+  margin-top: 6%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.product-bid{
+  font-family: Franklin Gothic Heavy;
+}
+
+.product{
+  margin: 0px !important;
+}
+
+.acution-description{
+  background-color: white;
+  border: 1px solid grey;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+#addBid{
+  margin-left: 16px;
+}
+
+.nav-top{
+  border-bottom: 1px solid #1a000d;
+}
+
+.categories{
+  border-bottom: 1px solid #1a000d;
+  margin-bottom: 10px;
+  background-color: white !important;
+}
+
+.btn-card{
+  background-color: black;
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.btn-card:hover{
+  background-color: #007099;
+  color: white;
+}
+
+.list-details{
+  text-align: center;
+}
+
+.btn-auction{
+  margin-top: 10px;
+  background-color: #2e004d;
+  color: white;
+}
+
+.btn-outline-auction{
+  border: 1px solid #2e004d;
+  color: #2e004d;
+}
+
+.btn-outline-auction:hover{
+  background-color: #007099;
+  color: white;
+}
+
+.btn-auction:hover{
+  color: #e3e3e3;
+}
+
+.category-link{
+  color: black !important;
+  text-shadow: 1px 0px 0px #000000;
+}
+
+.category-link:hover{
+  color: grey !important;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+    pointer-events: none;
+}
+
+.dropdown-item:active{
+  background-color: #2e004d;
+}
+
+.dropdown{
+  list-style: none !important;
+}
+
+.comment-cont{
+  font-family: sans-serif;
+}
+

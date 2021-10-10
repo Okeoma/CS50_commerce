@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+    
+<div>
+   
+   <div class="container-fluid">
+        <div class="row">	   
+            
+            {% for listing in listings %}			
+			    {% if listing.closed == True %}
+				    {% if listing.last_bid.user.username == request.user.username %} 				                  			
+                    <div class="card list-details col-lg-4 col-sm-12">
+                        <div class="card-body">
+						    <h6 class="card-title product-title product-description"><b style="color:red;">Congratulations!!! You won item no.{{listing.id}}</b></h5>
+                            <h5 class="card-title product-title product-description"><i>{{listing.title}}</i></h5>
+                            <h6 class="card-subtitle mb-2 text-muted product-description">{{listing.datepublished}}</h6>							
+                            <h6 class="card-subtitle mb-2 text-muted product-description">Listed By: <b>{{listing.user}}</b></h6>
+					        <a href="{% url 'listing_view' listing=listing.id %}" class="card-link btn btn-outline-auction">
+                                <img class="img-fluid" src="{{listing.image.url}}" alt="connect" style="max-height:300px">
+					        </a>
+					
+                        </div>
+                        <ul class="list-group list-group-flush"> 
+                            <li class="list-group-item product-description"><b style="color:red;">Winner of Bid: {{listing.last_bid.user.username}}</b></li>						
+                            <li class="list-group-item product-description">Your Bid Amount: ${{listing.last_bid.bid}}</li>                            
+                            <li class="list-group-item product-description">Category: <b>{{listing.categories}}</b></li>
+                        </ul>                        				
+                    </div>
+					{% endif %}
+				{% endif %}
+            {% endfor %}
+	
+        </div>
+    </div>   
+	 
+</div>
+	
+{% endblock %}
