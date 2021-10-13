@@ -1,0 +1,108 @@
+{% load static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/main.css' %}" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">		
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>        
+		{% block extrahead %}{% endblock %}
+        
+    </head>
+
+    <body>	
+	
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand"><b style="font-size:30px;">Auctions</b></a>  
+    <div>
+      <ul class="navbar-nav mr-auto">	    
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Active Listings</a>
+        </li>
+		{% if user.is_authenticated %}   
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'add_listing' %}">Add Listing</a>
+            </li>
+			<li class="nav-item">
+                <a class="nav-link" href="{% url 'my_listings' user=request.user %}">My Listings</a>
+            </li>
+			<li class="nav-item">
+                <a class="nav-link" href="{% url 'my_watchlist' %}">Watchlist <span id="watchListTotal">{{sum_listing}}</span></a>
+            </li>
+			<li class="nav-item">
+                <a class="nav-link" href="{% url 'my_winnings' %}">My Winnings </a>
+            </li>	
+			
+		{% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+        {% endif %}	        
+        {% if user.is_authenticated %}
+		<object align="right"> 	
+        <li class="nav-item dropdown">            		
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Signed in as <strong>{{ user.username }}</strong>.
+			</a>			
+				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="{% url 'my_listings' user=request.user %}">My Listings</a></li>
+                    <li><a class="dropdown-item" href="{% url 'my_watchlist' %}">Watchlist <span id="watchListTotal">{{sum_listing}}</span></a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                </ul>                				
+        </li>        
+		</object>
+		{% endif %}			
+      </ul>
+    </div>
+</div>
+    {% if request.user.id is None %}
+	    <div > 
+			<a  href="{% url 'login' %}" >
+                <strong>NotSignedIn.</strong>
+			</a>	
+        </div>			
+    {% endif %}     
+</nav>	
+			
+		{% if user.is_authenticated %}
+        <nav class="navbar navbar-expand navbar-light categories">
+            <div class="mx-auto order-0">
+                <ul class="navbar-nav ml-auto">
+                    {% for categories in categories.all %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'categories' categories=categories.categories %}" id="navbarDropdown" role="button">
+						
+                          <b>{{categories}}</b>
+                        </a>
+                      
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+        {% endif %}		
+			
+		<div class="middle">
+		    <div style="padding:0px;width:100%;height:70px;margin:auto;Background:#00394d;">
+                <hr>        
+                <center><b style="font-size:30px; color:#f5f5f5;margin:auto;">{{title}}</b></center>
+                <hr>
+        </div>
+        <hr>        
+            {% block body %}
+            {% endblock %}			
+	    </div>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>	
+		<script src="{% static 'auctions/main.js' %}" type="text/javascript"></script>
+    </body>	
+	
+</html>
+
+
