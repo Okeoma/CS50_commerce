@@ -14,7 +14,7 @@ class Categories(models.Model):
 	('Household', 'Household'),        
         ('Food', 'Food')
     )    
-    categories = models.CharField(max_length=68, choices=CATEGORIES)
+    categories = models.CharField(max_length=68, choices=CATEGORIES, verbose_name="categories" default="Electronics")
 
     def __str__(self):
         return self.categories		
