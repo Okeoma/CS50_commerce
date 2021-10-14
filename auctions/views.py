@@ -277,7 +277,7 @@ class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
         fields = ('title', 'description', 'starting_bid', 'categories', 'image')
-        widgets = {'categories' : forms.Select(choices=Categories.objects.all(), attrs={'class' : 'form-control'}),                   
+        widgets = {'categories' : forms.Select(attrs={'class': 'custom-select md-form'}),                   
                    'title': forms.TextInput(attrs={'class': 'form-control'}),
                    'description': forms.TextInput(attrs={'class': 'form-control'}),
                    'starting_bid': forms.NumberInput(attrs={'class': 'form-control'})} 
