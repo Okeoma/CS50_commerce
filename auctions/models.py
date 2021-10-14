@@ -11,7 +11,7 @@ class Categories(models.Model):
         ('Electronics', 'Electronics'),
         ('Books', 'Books'),
         ('Fashion', 'Fashion'),
-		('Household', 'Household'),        
+	('Household', 'Household'),        
         ('Food', 'Food')
     )    
     categories = models.CharField(max_length=68, choices=CATEGORIES)
