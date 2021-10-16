@@ -25,19 +25,6 @@ Listing Page: Clicking on a listing should take users to a page specific to that
 
 :computer: &nbsp; **View Course [here](https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript)**
 
-:arrow_forward: &nbsp; **View Live Demo [here](https://youtu.be/_oQ1NRAiidI)**
+:arrow_forward: &nbsp; **View Live Demo [here](https://youtu.be/CI4MXz8WqTE)**
 
 &nbsp;
-
-### Contribute
-
-Contributions are always welcome! Please create a PR to contribute.
-
-### :pencil: &nbsp; License
-
-This project is licensed under [MIT](https://opensource.org/licenses/MIT) license.
-
-### :man_astronaut: &nbsp; Show your support
-
-Give a ⭐️ if this project helped you!
-
