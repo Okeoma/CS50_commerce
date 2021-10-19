@@ -27,4 +27,4 @@ Listing Page: Clicking on a listing should take users to a page specific to that
 
 :arrow_forward: &nbsp; **View Live Demo [here](https://youtu.be/CI4MXz8WqTE)**
 
-:spider_web: &nbsp; **View Demo Website [here](https://okeoma-auctions.herokuapp.com/)**
+:spider_web: &nbsp; **View Demo Website [here](https://commercedynamics.azurewebsites.net)**
